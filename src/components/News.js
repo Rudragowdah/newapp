@@ -1,8 +1,22 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
+import PropTypes from 'prop-types';
+
 
 export class news extends Component {
+  static defaultProps = {
+    country:'in',
+    pageSize:10,
+    category:'science'
+  }
+
+  static propTypes = {
+    country : PropTypes.string,
+    pageSize : PropTypes.number,
+    category : PropTypes.string
+  }
+
   constructor() {
     super();
     // console.log("I am a constructor");
@@ -15,7 +29,7 @@ export class news extends Component {
 
   async componentDidMount() {
     let url =
-      `https://newsapi.org/v2/everything?q=bitcoin&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=1`;
+      `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=1`;
       this.setState({
         loading:true
       })
@@ -29,7 +43,7 @@ export class news extends Component {
   }
 
   handleNext = async () => {
-      let url = `https://newsapi.org/v2/everything?q=bitcoin&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
+      let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
       this.setState({
         loading:true
       })
@@ -46,7 +60,7 @@ export class news extends Component {
 
   handlePrevious = async () => {
     console.log("Previous");
-    let url = `https://newsapi.org/v2/everything?q=bitcoin&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=${this.state.page - 1}`;
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=${this.state.page - 1}`;
     this.setState({
       loading:true
     })

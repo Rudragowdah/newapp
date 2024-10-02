@@ -15,7 +15,7 @@ export class news extends Component {
 
   async componentDidMount() {
     let url =
-      `https://newsapi.org/v2/top-headlines?country=us&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=1`;
+      `https://newsapi.org/v2/everything?q=bitcoin&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=1`;
       this.setState({
         loading:true
       })
@@ -23,12 +23,13 @@ export class news extends Component {
     let parsedData = await data.json();
     this.setState({
       articles: parsedData.articles,
-      loading: false
+      loading: false,
+      totalResults:parsedData.totalResults
     });
   }
 
   handleNext = async () => {
-      let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
+      let url = `https://newsapi.org/v2/everything?q=bitcoin&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=${this.state.page + 1}`;
       this.setState({
         loading:true
       })
@@ -38,13 +39,14 @@ export class news extends Component {
       this.setState({
         page: this.state.page + 1,
         articles: parsedData.articles,
-        loading: false
+        loading: false,
+        totalResults:parsedData.totalResults
       });
   }
 
   handlePrevious = async () => {
     console.log("Previous");
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=${this.state.page - 1}`;
+    let url = `https://newsapi.org/v2/everything?q=bitcoin&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${this.props.pageSize}&page=${this.state.page - 1}`;
     this.setState({
       loading:true
     })
@@ -53,8 +55,27 @@ export class news extends Component {
     this.setState({
       page: this.state.page - 1,
       articles: parsedData.articles,
-      loading: false
+      loading: false,
+      totalResults:parsedData.totalResults
     });
+  }
+  checkDisablity =()=> {
+    console.log(this.state.totalResults);
+    if(this.state.totalResults>=100) {
+      if((this.state.page+1)*this.props.pageSize <= 100)
+      {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+    else if(this.state.totalResults - ((this.state.page)*this.props.pageSize) > 0){
+        return false;
+    }
+    else{
+      return true;
+    }
   }
 
   render() {
@@ -63,7 +84,7 @@ export class news extends Component {
           <h2 className="text-center my-3">Daily News - Top Headings</h2>
           {this.state.loading && <Spinner/>}
           <div className="row">
-            {this.state.articles.map((element) => {
+            {!this.state.loading && this.state.articles.map((element) => {
               return (
                 <div className="col-md-4 my-3" key={element.url}>
                   <NewsItem
@@ -91,7 +112,7 @@ export class news extends Component {
             </button>
             <button
               type="button"
-              disabled={(this.state.page+1)*this.props.pageSize > 100}
+              disabled={this.checkDisablity()}
               className="btn btn-dark"
               onClick={this.handleNext}
             >

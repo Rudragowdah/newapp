@@ -8,13 +8,15 @@ export class news extends Component {
   static defaultProps = {
     country:'in',
     pageSize:10,
-    category:'science'
+    category:'science',
+    // key: 'general'
   }
 
   static propTypes = {
     country : PropTypes.string,
     pageSize : PropTypes.number,
-    category : PropTypes.string
+    category : PropTypes.string,
+    // key: PropTypes.string
   }
 
   constructor() {
@@ -109,7 +111,7 @@ export class news extends Component {
                         : ""
                     }
                     imageUrl={element.urlToImage}
-                    newsUrl={element.url}
+                    newsUrl={element.url} author={element.author} date={element.publishedAt} source={element.source.name}
                   />
                 </div>
               );

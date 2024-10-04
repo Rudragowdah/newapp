@@ -44,26 +44,32 @@ export class news extends Component {
   };
 
   async componentDidMount() {
+    this.props.setProgress(10);
     let url = `https://newsapi.org/v2/top-headlines?country=${
       this.props.country
     }&category=${
       this.props.category
-    }&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${
+    }&apiKey=${this.props.apikey}&pageSize=${
       this.props.pageSize
     }&page=${this.state.page}`;
     this.setState({
       loading: true,
     });
+    console.log(url);
     let data = await fetch(url);
+    this.props.setProgress(40);
     let parsedData = await data.json();
+    this.props.setProgress(70);
     this.setState({
       loading: false,
       totalResults: parsedData.totalResults,
     });
+    this.props.setProgress(100);
     let articles2 = this.updateArticles(parsedData.articles);
     this.setState({
       articles : articles2
     });
+    this.setState({ page: this.state.page + 1 })
   }
 
   checkDisablity = () => {
@@ -87,23 +93,28 @@ export class news extends Component {
     console.log(this.state.page);
     console.log(this.state.totalResults);
     if (this.checkDisablity) {
-      this.setState({ page: this.state.page + 1 })
-
+      this.props.setProgress(10);
+      // this.setState({ page: this.state.page + 1 })
       let url = `https://newsapi.org/v2/top-headlines?country=${
         this.props.country
       }&category=${
         this.props.category
-      }&apiKey=87548a2330b446aa9c1e6a3347e50155&pageSize=${
+      }&apiKey=${this.props.apikey}&pageSize=${
         this.props.pageSize
       }&page=${this.state.page}`;
       this.setState({
         loading: true,
       });
+      console.log(url);
       let data = await fetch(url);
+      this.props.setProgress(40);
       let parsedData = await data.json();
+      this.props.setProgress(70);
       this.setState({
         loading: false
       });
+      this.props.setProgress(100);
+      this.setState({ page: this.state.page + 1 })
 
       let articles2 = parsedData.articles;
      
@@ -112,7 +123,9 @@ export class news extends Component {
       this.setState({
         articles: this.state.articles.concat(articles2),
       });
+      console.log(this.state.articles);
     }
+    
   }
 
   render() {

@@ -11,13 +11,13 @@ export class App extends Component {
         <Router>
           <NavBar />
           <Routes>
-               key=""<Route path="/" element={<News key="general" id='' pageSize={10} country='us' category='general'/>}></Route>
-              <Route path="/business" element={<News key="business" id='business' pageSize={10} country='us' category='business'/>}></Route>
-              <Route path="/entertainment" element={<News key="entertainment" id='entertainment' pageSize={10} country='us' category='entertainment'/>}></Route>
-              <Route path="/health" element={<News key="health" id='health' pageSize={10} country='us' category='health'/>}></Route>
-              <Route path="/science" element={<News key="science" id='science' pageSize={10} country='us' category='science'/>}></Route>
-              <Route path="/sports" element={<News key="sports" id='sports' pageSize={10} country='us' category='sports'/>}></Route>
-              <Route path="/technology" element={<News key="technology" id='technology' pageSize={10} country='us' category='technology'/>}></Route>
+              <Route path="/" element={<News key="general" country='us' category='general'/>}></Route>
+              <Route path="/business" element={<News key="business" pageSize={10} country='us' category='business'/>}></Route>
+              <Route path="/entertainment" element={<News key="entertainment" pageSize={10} country='us' category='entertainment'/>}></Route>
+              <Route path="/health" element={<News key="health" pageSize={10} country='us' category='health'/>}></Route>
+              <Route path="/science" element={<News key="science" pageSize={10} country='us' category='science'/>}></Route>
+              <Route path="/sports" element={<News key="sports" pageSize={10} country='us' category='sports'/>}></Route>
+              <Route path="/technology" element={<News key="technology" pageSize={10} country='us' category='technology'/>}></Route>
           </Routes>
         </Router>
       </div>

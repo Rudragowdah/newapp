@@ -73,8 +73,6 @@ const News = (props={ country: "in", pageSize: 10, category: "science",})=> {
   };
 
   const fetchMoreData = async ()=> {
-    // console.log(page);
-    // console.log(totalResults);
     if (checkDisablity) {
       props.setProgress(10);
       let url = `https://newsapi.org/v2/top-headlines?country=${
@@ -85,7 +83,6 @@ const News = (props={ country: "in", pageSize: 10, category: "science",})=> {
         props.pageSize
       }&page=${page}`;
       setLoading(true);
-      // console.log(url);
       let data = await fetch(url);
       props.setProgress(40);
       let parsedData = await data.json();
@@ -100,7 +97,6 @@ const News = (props={ country: "in", pageSize: 10, category: "science",})=> {
 
       setArticles(articles.concat(articles2));
 
-      // console.log(articles);
     }
     
   }
@@ -111,7 +107,6 @@ const News = (props={ country: "in", pageSize: 10, category: "science",})=> {
           Daily News - Top {capitalizeFirstLetter(props.category)}{" "}
           Headlines
         </h2>
-        {/* {this.state.loading && <Spinner />} */}
         <InfiniteScroll
           dataLength={articles.length}
           next={fetchMoreData}
@@ -141,11 +136,6 @@ const News = (props={ country: "in", pageSize: 10, category: "science",})=> {
     );
 }
 
-// News.defaultProps = {
-//   country: "in",
-//   pageSize: 10,
-//   category: "science",
-// };
 
 News.propTypes = {
   country: PropTypes.string,
